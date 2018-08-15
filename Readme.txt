@@ -1,11 +1,14 @@
 将项目升级为vs2017
 FiddlerJsonViewer项目编译报错，暂移除。重点是使用JsonView
+
 JsonView
 由.net2.0升级为.net4.6.1
+build目录为文件生成目录，下载后可以直接使用，不需要再编译。
 改进功能说明：
 1、简化操作，界面进行调整，所有操作放在一个界面上。
 2、在格式化树右键菜单增加 copy key功能，可以复制json字段名（原版本不支持）。
 3、【重要】增加了历史json记忆功能。
+
 
 
 The JSON View package is a set of 3 viewers available in the following flavors:
