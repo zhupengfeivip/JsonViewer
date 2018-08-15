@@ -17,8 +17,12 @@ namespace EPocalipse.Json.Viewer
 
         public PluginsManager()
         {
-        }
 
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public void Initialize()
         {
             try
@@ -30,6 +34,8 @@ namespace EPocalipse.Json.Viewer
                 if (config == null)
                     InitDefaults();
                 ViewerConfiguration viewerConfig = (ViewerConfiguration)config.GetSection("jsonViewer");
+                if (viewerConfig == null)
+                    InitDefaults();
                 InternalConfig(viewerConfig);
             }
             catch

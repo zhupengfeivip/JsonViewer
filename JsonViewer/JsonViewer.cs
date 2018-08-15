@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Design;
+using System.Drawing.Printing;
 using Newtonsoft.Json;
 using System.IO;
 using System.Threading;
@@ -28,6 +30,9 @@ namespace EPocalipse.Json.Viewer
             try
             {
                 _pluginsManager.Initialize();
+                StringCollection jsonHistory = Settings.Default.JsonHistory;
+                foreach (string json in jsonHistory)
+                    lbxHistory.Items.Insert(0, json);
             }
             catch (Exception e)
             {
@@ -35,6 +40,9 @@ namespace EPocalipse.Json.Viewer
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
         public string Json
         {
@@ -49,6 +57,13 @@ namespace EPocalipse.Json.Viewer
                     _json = value.Trim();
                     txtJson.Text = _json;
                     Redraw();
+
+                    if (string.IsNullOrWhiteSpace(_json) == false)
+                    {
+                        lbxHistory.Items.Insert(0, _json);
+                        Settings.Default.JsonHistory.Add(_json);
+                        Settings.Default.Save();
+                    }
                 }
             }
         }
@@ -66,6 +81,9 @@ namespace EPocalipse.Json.Viewer
             }
         }
 
+        /// <summary>
+        /// ÖØ»­JSONÊ÷
+        /// </summary>
         private void Redraw()
         {
             try
@@ -79,6 +97,10 @@ namespace EPocalipse.Json.Viewer
                         JsonObjectTree tree = JsonObjectTree.Parse(_json);
                         VisualizeJsonTree(tree);
                     }
+                }
+                catch (Exception e)
+                {
+                    ShowException(e);
                 }
                 finally
                 {
@@ -201,6 +223,11 @@ namespace EPocalipse.Json.Viewer
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtJson_TextChanged(object sender, EventArgs e)
         {
             Json = txtJson.Text;
@@ -358,7 +385,7 @@ namespace EPocalipse.Json.Viewer
 
         private void ShowException(Exception e)
         {
-            MessageBox.Show(this, e.Message, "Json Viewer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(this, e.ToString(), "Json Viewer", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnStripToSqr_Click(object sender, EventArgs e)
@@ -603,6 +630,15 @@ namespace EPocalipse.Json.Viewer
             }
         }
 
+        private void mnuCopyKey_Click(object sender, EventArgs e)
+        {
+            JsonViewerTreeNode node = GetSelectedTreeNode();
+            if (node != null && node.JsonObject.Value != null)
+            {
+                Clipboard.SetText(node.JsonObject.Id.ToString());
+            }
+        }
+
         private void lblError_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (lblError.Enabled && lblError.Tag != null)
@@ -632,6 +668,21 @@ namespace EPocalipse.Json.Viewer
                 text = text.Replace(ch.ToString(), "");
             }
             txtJson.Text = text;
+        }
+
+        private void lbxHistory_DoubleClick(object sender, EventArgs e)
+        {
+            txtJson.Text = lbxHistory.SelectedItem.ToString();
+        }
+
+        private void btnExpanded_Click(object sender, EventArgs e)
+        {
+            tvJson.ExpandAll();
+        }
+
+        private void btnCollapseAll_Click(object sender, EventArgs e)
+        {
+            tvJson.CollapseAll();
         }
     }
 

@@ -53,7 +53,7 @@ namespace EPocalipse.Json.JsonView
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            JsonViewer.ShowTab(Tabs.Text);
+            JsonViewer.ShowTab(Tabs.Viewer);
         }
 
         /// <summary>
