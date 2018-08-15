@@ -1,3 +1,9 @@
+将项目升级为vs2017
+FiddlerJsonViewer项目编译报错，暂移除。重点是使用JsonView
+JsonView
+由.net2.0升级为.net4.6.1
+
+
 The JSON View package is a set of 3 viewers available in the following flavors:
 1) A standalone viewer - JsonView.exe
 2) A plugin for Fiddler 2 (http://www.fiddler2.com/) - FiddlerJsonViewer.dll
