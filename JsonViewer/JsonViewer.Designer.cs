@@ -32,8 +32,11 @@ namespace EPocalipse.Json.Viewer
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonViewer));
             this.spcViewer = new System.Windows.Forms.SplitContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.txtJson = new System.Windows.Forms.TextBox();
+            this.txtJson = new EPocalipse.Json.Viewer.TextEditorControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cbxQuoteName = new System.Windows.Forms.CheckBox();
+            this.numIndentation = new System.Windows.Forms.NumericUpDown();
+            this.cbxIndented = new System.Windows.Forms.CheckBox();
             this.btnFormat = new System.Windows.Forms.Button();
             this.lbxHistory = new System.Windows.Forms.ListBox();
             this.btnCollapseAll = new System.Windows.Forms.Button();
@@ -79,6 +82,7 @@ namespace EPocalipse.Json.Viewer
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIndentation)).BeginInit();
             this.mnuTree.SuspendLayout();
             this.pnlFind.SuspendLayout();
             this.mnuVisualizerPnl.SuspendLayout();
@@ -127,23 +131,18 @@ namespace EPocalipse.Json.Viewer
             // 
             // txtJson
             // 
-            this.txtJson.AcceptsReturn = true;
-            this.txtJson.AcceptsTab = true;
-            this.txtJson.BackColor = System.Drawing.SystemColors.Info;
-            this.txtJson.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtJson.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtJson.HideSelection = false;
+            this.txtJson.IsReadOnly = false;
             this.txtJson.Location = new System.Drawing.Point(0, 0);
-            this.txtJson.MaxLength = 0;
-            this.txtJson.Multiline = true;
             this.txtJson.Name = "txtJson";
-            this.txtJson.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtJson.Size = new System.Drawing.Size(238, 496);
-            this.txtJson.TabIndex = 5;
-            this.txtJson.TextChanged += new System.EventHandler(this.txtJson_TextChanged);
+            this.txtJson.TabIndex = 1;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cbxQuoteName);
+            this.panel1.Controls.Add(this.numIndentation);
+            this.panel1.Controls.Add(this.cbxIndented);
             this.panel1.Controls.Add(this.btnFormat);
             this.panel1.Controls.Add(this.lbxHistory);
             this.panel1.Controls.Add(this.btnCollapseAll);
@@ -156,13 +155,49 @@ namespace EPocalipse.Json.Viewer
             this.panel1.Size = new System.Drawing.Size(103, 496);
             this.panel1.TabIndex = 0;
             // 
+            // cbxQuoteName
+            // 
+            this.cbxQuoteName.AutoSize = true;
+            this.cbxQuoteName.Checked = true;
+            this.cbxQuoteName.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxQuoteName.Location = new System.Drawing.Point(9, 243);
+            this.cbxQuoteName.Name = "cbxQuoteName";
+            this.cbxQuoteName.Size = new System.Drawing.Size(72, 16);
+            this.cbxQuoteName.TabIndex = 8;
+            this.cbxQuoteName.Text = "name引号";
+            this.cbxQuoteName.UseVisualStyleBackColor = true;
+            // 
+            // numIndentation
+            // 
+            this.numIndentation.Location = new System.Drawing.Point(14, 37);
+            this.numIndentation.Name = "numIndentation";
+            this.numIndentation.Size = new System.Drawing.Size(57, 21);
+            this.numIndentation.TabIndex = 7;
+            this.numIndentation.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            // 
+            // cbxIndented
+            // 
+            this.cbxIndented.AutoSize = true;
+            this.cbxIndented.Checked = true;
+            this.cbxIndented.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxIndented.Location = new System.Drawing.Point(14, 15);
+            this.cbxIndented.Name = "cbxIndented";
+            this.cbxIndented.Size = new System.Drawing.Size(48, 16);
+            this.cbxIndented.TabIndex = 6;
+            this.cbxIndented.Text = "缩进";
+            this.cbxIndented.UseVisualStyleBackColor = true;
+            // 
             // btnFormat
             // 
-            this.btnFormat.Location = new System.Drawing.Point(11, 3);
+            this.btnFormat.Location = new System.Drawing.Point(14, 91);
             this.btnFormat.Name = "btnFormat";
             this.btnFormat.Size = new System.Drawing.Size(75, 23);
             this.btnFormat.TabIndex = 5;
-            this.btnFormat.Text = "Format";
+            this.btnFormat.Text = "格式化";
             this.btnFormat.UseVisualStyleBackColor = true;
             this.btnFormat.Click += new System.EventHandler(this.btnFormat_Click);
             // 
@@ -179,41 +214,41 @@ namespace EPocalipse.Json.Viewer
             // 
             // btnCollapseAll
             // 
-            this.btnCollapseAll.Location = new System.Drawing.Point(11, 119);
+            this.btnCollapseAll.Location = new System.Drawing.Point(14, 207);
             this.btnCollapseAll.Name = "btnCollapseAll";
             this.btnCollapseAll.Size = new System.Drawing.Size(75, 23);
             this.btnCollapseAll.TabIndex = 3;
-            this.btnCollapseAll.Text = "Collapse";
+            this.btnCollapseAll.Text = "折叠";
             this.btnCollapseAll.UseVisualStyleBackColor = true;
             this.btnCollapseAll.Click += new System.EventHandler(this.btnCollapseAll_Click);
             // 
             // btnExpanded
             // 
-            this.btnExpanded.Location = new System.Drawing.Point(11, 90);
+            this.btnExpanded.Location = new System.Drawing.Point(14, 178);
             this.btnExpanded.Name = "btnExpanded";
             this.btnExpanded.Size = new System.Drawing.Size(75, 23);
             this.btnExpanded.TabIndex = 2;
-            this.btnExpanded.Text = "Expanded";
+            this.btnExpanded.Text = "展开";
             this.btnExpanded.UseVisualStyleBackColor = true;
             this.btnExpanded.Click += new System.EventHandler(this.btnExpanded_Click);
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(11, 32);
+            this.btnCopy.Location = new System.Drawing.Point(14, 120);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(75, 23);
             this.btnCopy.TabIndex = 1;
-            this.btnCopy.Text = "Copy";
+            this.btnCopy.Text = "复制";
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // btnPaste
             // 
-            this.btnPaste.Location = new System.Drawing.Point(11, 61);
+            this.btnPaste.Location = new System.Drawing.Point(14, 149);
             this.btnPaste.Name = "btnPaste";
             this.btnPaste.Size = new System.Drawing.Size(75, 23);
             this.btnPaste.TabIndex = 0;
-            this.btnPaste.Text = "Paste";
+            this.btnPaste.Text = "粘贴";
             this.btnPaste.UseVisualStyleBackColor = true;
             this.btnPaste.Click += new System.EventHandler(this.btnPaste_Click);
             // 
@@ -525,11 +560,12 @@ namespace EPocalipse.Json.Viewer
             ((System.ComponentModel.ISupportInitialize)(this.spcViewer)).EndInit();
             this.spcViewer.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numIndentation)).EndInit();
             this.mnuTree.ResumeLayout(false);
             this.pnlFind.ResumeLayout(false);
             this.pnlFind.PerformLayout();
@@ -578,7 +614,6 @@ namespace EPocalipse.Json.Viewer
         private System.Windows.Forms.ToolStripMenuItem removeSpecialCharsToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox txtJson;
         private System.Windows.Forms.Button btnPaste;
         private System.Windows.Forms.Button btnCollapseAll;
         private System.Windows.Forms.Button btnExpanded;
@@ -586,5 +621,9 @@ namespace EPocalipse.Json.Viewer
         private System.Windows.Forms.ListBox lbxHistory;
         private System.Windows.Forms.Button btnFormat;
         private System.Windows.Forms.ToolStripMenuItem mnuCopyKey;
+        private TextEditorControl txtJson;
+        private System.Windows.Forms.CheckBox cbxIndented;
+        private System.Windows.Forms.NumericUpDown numIndentation;
+        private System.Windows.Forms.CheckBox cbxQuoteName;
     }
 }

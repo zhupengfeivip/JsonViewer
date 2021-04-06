@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Threading;
 using EPocalipse.Json.Viewer.Properties;
+using ICSharpCode.TextEditor.Document;
 
 namespace EPocalipse.Json.Viewer
 {
@@ -33,6 +34,11 @@ namespace EPocalipse.Json.Viewer
                 StringCollection jsonHistory = Settings.Default.JsonHistory;
                 foreach (string json in jsonHistory)
                     lbxHistory.Items.Insert(0, json);
+
+
+
+                txtJson.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("JSON");
+                txtJson.Encoding = Encoding.GetEncoding("GB2312");
             }
             catch (Exception e)
             {
@@ -152,8 +158,8 @@ namespace EPocalipse.Json.Viewer
 
         private void MarkError(ErrorDetails _errorDetails)
         {
-            txtJson.Select(Math.Max(0, _errorDetails.Position - 1), 10);
-            txtJson.ScrollToCaret();
+            //txtJson.Select(Math.Max(0, _errorDetails.Position - 1), 10);
+            //txtJson.ScrollToCaret();
         }
 
         private void VisualizeJsonTree(JsonObjectTree tree)
@@ -358,6 +364,11 @@ namespace EPocalipse.Json.Viewer
             tabControl.SelectedIndex = (int)tab;
         }
 
+        /// <summary>
+        /// ∏Ò ΩªØ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnFormat_Click(object sender, EventArgs e)
         {
             try
@@ -365,17 +376,20 @@ namespace EPocalipse.Json.Viewer
                 string json = txtJson.Text;
                 JsonSerializer s = new JsonSerializer();
                 JsonReader reader = new JsonReader(new StringReader(json));
-                Object jsonObject = s.Deserialize(reader);
-                if (jsonObject != null)
-                {
-                    StringWriter sWriter = new StringWriter();
-                    JsonWriter writer = new JsonWriter(sWriter);
+                object jsonObject = s.Deserialize(reader);
+                if (jsonObject == null)                
+                    return;                
+
+                StringWriter sWriter = new StringWriter();
+                JsonWriter writer = new JsonWriter(sWriter);
+                if (cbxIndented.Checked)
                     writer.Formatting = Formatting.Indented;
-                    writer.Indentation = 4;
-                    writer.IndentChar = ' ';
-                    s.Serialize(writer, jsonObject);
-                    txtJson.Text = sWriter.ToString();
-                }
+                writer.QuoteName = cbxQuoteName.Checked;
+                writer.Indentation = Convert.ToInt32(numIndentation.Value);
+                writer.IndentChar = ' ';
+                s.Serialize(writer, jsonObject);
+                txtJson.Text = sWriter.ToString();
+                txtJson.Refresh();
             }
             catch (Exception ex)
             {
@@ -600,16 +614,17 @@ namespace EPocalipse.Json.Viewer
         private void btnCopy_Click(object sender, EventArgs e)
         {
             string text;
-            if (txtJson.SelectionLength > 0)
-                text = txtJson.SelectedText;
-            else
-                text = txtJson.Text;
+            //if (txtJson.SelectionLength > 0)
+            //    text = txtJson.SelectedText;
+            //else
+            text = txtJson.Text;
             Clipboard.SetText(text);
         }
 
         private void btnPaste_Click(object sender, EventArgs e)
         {
             txtJson.Text = Clipboard.GetText();
+            txtJson.Refresh();
         }
 
         private void mnuCopy_Click(object sender, EventArgs e)

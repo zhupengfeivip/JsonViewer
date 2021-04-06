@@ -105,9 +105,8 @@ namespace EPocalipse.Json.JsonView
         /// <remarks>Menu item Edit > Select All</remarks>
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Control c;
-            c = this.JsonViewer.Controls.Find("txtJson", true)[0];
-            ((TextBox)c).SelectAll();
+            Control c = this.JsonViewer.Controls.Find("txtJson", true)[0];
+            ((TextEditorControl)c).SelectAll();
         }
 
         /// <summary>
@@ -118,14 +117,13 @@ namespace EPocalipse.Json.JsonView
         /// <remarks>Menu item Edit > Delete</remarks>
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Control c;
-            c = this.JsonViewer.Controls.Find("txtJson", true)[0];
-            string text;
-            if (((TextBox)c).SelectionLength > 0)
-                text = ((TextBox)c).SelectedText;
-            else
-                text = ((TextBox)c).Text;
-            ((TextBox)c).SelectedText = "";
+            //Control c = this.JsonViewer.Controls.Find("txtJson", true)[0];
+            //string text;
+            //if (((TextBox)c).SelectionLength > 0)
+            //    text = ((TextEditorControl)c).SelectedText;
+            //else
+            //    text = ((TextEditorControl)c).Text;
+            //text.SelectedText = "";
         }
 
         /// <summary>
@@ -136,9 +134,8 @@ namespace EPocalipse.Json.JsonView
         /// <remarks>Menu item Edit > Paste</remarks>
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Control c;
-            c = this.JsonViewer.Controls.Find("txtJson", true)[0];
-            ((TextBox)c).Paste();
+            Control c = this.JsonViewer.Controls.Find("txtJson", true)[0];
+            ((TextEditorControl)c).Paste();
         }
 
         /// <summary>
@@ -149,9 +146,8 @@ namespace EPocalipse.Json.JsonView
         /// <remarks>Menu item Edit > Copy</remarks>
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Control c;
-            c = this.JsonViewer.Controls.Find("txtJson", true)[0];
-            ((TextBox)c).Copy();
+            Control c = this.JsonViewer.Controls.Find("txtJson", true)[0];
+            ((TextEditorControl)c).Copy();
         }
 
         /// <summary>
@@ -162,9 +158,8 @@ namespace EPocalipse.Json.JsonView
         /// <remarks>Menu item Edit > Cut</remarks>
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Control c;
-            c = this.JsonViewer.Controls.Find("txtJson", true)[0];
-            ((TextBox)c).Cut();
+            Control c = this.JsonViewer.Controls.Find("txtJson", true)[0];
+            ((TextEditorControl)c).Cut();
         }
 
         /// <summary>
@@ -175,9 +170,8 @@ namespace EPocalipse.Json.JsonView
         /// <remarks>Menu item Edit > Undo</remarks>
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Control c;
-            c = this.JsonViewer.Controls.Find("txtJson", true)[0];
-            ((TextBox)c).Undo();
+            Control c = this.JsonViewer.Controls.Find("txtJson", true)[0];
+            ((TextEditorControl)c).Undo();
         }
 
         /// <summary>
@@ -188,11 +182,9 @@ namespace EPocalipse.Json.JsonView
         /// <remarks>Menu item Viewer > Find</remarks>
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Control c;
-            c = this.JsonViewer.Controls.Find("pnlFind", true)[0];
+            Control c = this.JsonViewer.Controls.Find("pnlFind", true)[0];
             ((Panel)c).Visible = true;
-            Control t;
-            t = this.JsonViewer.Controls.Find("txtFind", true)[0];
+            Control t = this.JsonViewer.Controls.Find("txtFind", true)[0];
             ((TextBox)t).Focus();
         }
 
