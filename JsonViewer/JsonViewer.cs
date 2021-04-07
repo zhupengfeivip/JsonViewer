@@ -35,8 +35,6 @@ namespace EPocalipse.Json.Viewer
                 foreach (string json in jsonHistory)
                     lbxHistory.Items.Insert(0, json);
 
-
-
                 txtJson.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("JSON");
                 txtJson.Encoding = Encoding.GetEncoding("GB2312");
             }

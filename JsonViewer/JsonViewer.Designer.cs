@@ -137,6 +137,7 @@ namespace EPocalipse.Json.Viewer
             this.txtJson.Name = "txtJson";
             this.txtJson.Size = new System.Drawing.Size(238, 496);
             this.txtJson.TabIndex = 1;
+            this.txtJson.TextChanged += new System.EventHandler(this.txtJson_TextChanged);
             // 
             // panel1
             // 

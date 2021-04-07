@@ -34,6 +34,10 @@ namespace EPocalipse.Json.JsonView
             }
         }
 
+        /// <summary>
+        /// 从文件加载json
+        /// </summary>
+        /// <param name="fileName"></param>
         private void LoadFromFile(string fileName)
         {
             string json = File.ReadAllText(fileName);
@@ -41,6 +45,9 @@ namespace EPocalipse.Json.JsonView
             JsonViewer.Json = json;
         }
 
+        /// <summary>
+        /// 从剪切板加载json
+        /// </summary>
         private void LoadFromClipboard()
         {
             string json = Clipboard.GetText();
